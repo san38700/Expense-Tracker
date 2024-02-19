@@ -1,6 +1,6 @@
-const postUser = document.getElementById('form')
+const form = document.getElementById('form')
 
-postUser.addEventListener('submit', addUser)
+form.addEventListener('submit', addUser)
 const errorContainer = document.getElementById('error-container');
 
 function addUser(e) {
@@ -35,6 +35,10 @@ function addUser(e) {
                 div.textContent = err.response.data.error
                 div.style.color = 'red'; 
                 errorContainer.appendChild(div);
+                setTimeout(function() {
+                    div.remove(); // Remove the div from the DOM
+                    form.reset()
+                }, 3000);
             }
         });
     }

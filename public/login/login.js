@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form');
     const errorContainer = document.getElementById('error-container');
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    
 
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission
 
-        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
         // Create an object with the user's email and password
         const userObj = {
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             password: password
         };
 
+        console.log(userObj)
         // Send a POST request using Axios
         axios.post('http://localhost:3000/user/login', userObj)
             .then(response => {

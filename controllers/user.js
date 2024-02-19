@@ -9,9 +9,9 @@ exports.createUser = async (req, res) => {
       const { name, email, password } = req.body;
       const saltRounds = 10
       const hashedPassword = await bcrypt.hash(password, saltRounds)
-      const newUser = await NewUser.create({ name, email, password : hashedPassword });
-      console.log(newUser)
-      res.status(201).json({ user: newUser });
+      const userCreate = await User.create({ name, email, password : hashedPassword });
+      console.log(userCreate)
+      res.status(201).json({ user: userCreate });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error or User already exists' });
@@ -25,25 +25,25 @@ function generateAccessToken(id,name,premiumuser){
 
 exports.userLogin = async (req, res) => {
   const { email, password } = req.body;
-
+        console.log(email)
   try {
       // Check if the user exists in the database
-      const user = await User.findOne({where: {email: email}});
-      // console.log(user.email)
+      const users = await User.findOne({where: {email: email}});
+      console.log(users)
       //console.log(user.ispremiumuser)
 
-      if (!user) {
+      if (!users) {
           return res.status(404).json({ message: '404 User not found Please Sign up' });
       }
 
       //check if password matches after decryption
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(password, users.password);
 
       if (!passwordMatch) {
         return res.status(401).json({ message: '401 User not authorized' });
       }
 
-      res.json({user:user,jwtToken: generateAccessToken(user.id,user.name,user.ispremiumuser)})
+      res.json({user:users,jwtToken: generateAccessToken(users.id,users.name,users.ispremiumuser)})
 
   } catch (error) {
       console.error(error);
