@@ -11,13 +11,17 @@ let userid;
 exports.forgotpassword = async (req,res,next) => {
     const {Email} = req.body
     //console.log(Email)
-
+    
     const user = await NewUser.findOne({where : {email : Email}})
+    if(user == null){
+        console.log('User not found')
+        res.json({message: 'User not found'})
+    }else{
     console.log(user.email,user.name)
     
     const requestId = uuidv4();
 
-    await ForgotPasswordRequest.create({ id: requestId, userid : user.id, isactive: true , newuserId: user.id})
+    await ForgotPasswordRequest.create({ id: requestId, userid : user.id, isactive: true , userId: user.id})
     .then(res => console.log('password request created'))
     .catch(err => console.log(err))
     
@@ -50,7 +54,7 @@ exports.forgotpassword = async (req,res,next) => {
             to: receivers,
             subject: 'Reset Password',
             // textContent: 'Please ignore password reset mail sent by mistake'
-            htmlContent: `<p>Please <a href='http://localhost:3000/password/resetpassword?id=${request.id}'>click here</a> to reset your password</p>`,
+            htmlContent: `<p>Please <a href='http://13.60.41.38:3000/password/resetpassword?id=${request.id}'>click here</a> to reset your password</p>`,
         }
     )
     .then(result => {
@@ -58,6 +62,8 @@ exports.forgotpassword = async (req,res,next) => {
        res.status(201).json({message: 'Please check your email for resetting your password',id: request.id})
     })
     .catch(err => console.log(err))
+    }
+    
 }
 
 
@@ -70,7 +76,7 @@ exports.resetpassword = async (req, res, next) => {
     // .then(res => console.log(res))
     // .catch(err => console.log(err))
     requestid = request.id
-    userid = request.userid
+    userid = request.userId
     //console.log(request.isactive,request.userid)
     if (request.isactive == true){
         const filePath = path.join(__dirname, '../public/password/resetpassword.html')

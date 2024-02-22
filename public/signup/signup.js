@@ -18,7 +18,7 @@ function addUser(e) {
     postData()
     function postData() {
         axios
-        .post('http://localhost:3000/user/signup', userObj)
+        .post('http://13.60.41.38:3000/user/signup', userObj)
         .then(res => {
             errorContainer.innerHTML =""
             alert('Sign Up successful')

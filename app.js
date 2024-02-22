@@ -17,6 +17,7 @@ const Expense = require('./models/expense')
 const User = require('./models/user')
 const ForgotPasswordRequest = require('./models/forgotpassword')
 const Url = require('./models/fileurl')
+const Order = require('./models/order')
 
 const sequelize = require('./util/database')
 
@@ -52,6 +53,9 @@ app.use((req,res) => {
 
 User.hasMany(Expense)
 Expense.belongsTo(User)
+
+User.hasMany(Order); // One user can have many orders
+Order.belongsTo(User); // Each order belongs to one user
 
 
 User.hasMany(ForgotPasswordRequest)

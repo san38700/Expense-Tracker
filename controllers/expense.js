@@ -26,7 +26,7 @@ exports.addExpense = async (req,res,next) => {
         const user = jwt.verify(token, process.env.TOKEN_SECRET);
         console.log('userId >>>', user.userId);
     
-        const data = await Expense.create({ amount, description, category, userid: user.userId }, { transaction: t });
+        const data = await Expense.create({ amount, description, category, userId: user.userId }, { transaction: t });
     
         const totalUserExpense = await User.findByPk(user.userId);
     
@@ -156,7 +156,7 @@ exports.downloadExpense =  async (req, res, next) => {
 
         console.log('File uploaded successfully. Object URL:', fileURL);
 
-        const url =  Url.create({url : fileURL, userid: userId})
+        const url =  Url.create({url : fileURL, userId: userId})
         url.then(result => {
             console.log(result.url)
             res.status(201).json({ fileURL, success: true });
@@ -171,7 +171,7 @@ exports.downloadExpense =  async (req, res, next) => {
 exports.downloads = async (req,res,next) => {
     try{
         const userId = req.user.id
-        const downloadedExpenses = await Url.findAll({where: {userid: userId}})
+        const downloadedExpenses = await Url.findAll({where: {userId: userId}})
         return res.status(201).json({downloadedExpenses})
     }catch(err){
         console.log(err)

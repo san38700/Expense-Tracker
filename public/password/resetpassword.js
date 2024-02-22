@@ -10,13 +10,13 @@ form.addEventListener('submit',function (e) {
     }
     token = localStorage.getItem('jwtToken')
     console.log(token)
-    axios.post('http://localhost:3000/password/newpassword', obj, {headers :{'Authorization': token}})
+    axios.post('http://13.60.41.38:3000/password/newpassword', obj, {headers :{'Authorization': token}})
     .then(res => {
 
         console.log(res.data)
         var messageElement = document.getElementById("message");
 
         messageElement.innerHTML = ""
-        messageElement.innerHTML += `\"${res.data.message}\"`;
+        messageElement.innerHTML += `\"${res.data.message}\  <a href="..\\login\\login.html">Click here to login</a>"`;
     })
 })

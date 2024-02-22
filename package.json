@@ -25,6 +25,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.9.1",
     "npm-git-install": "^0.3.0",
+    "pm2": "^5.3.1",
     "razorpay": "^2.9.2",
     "sequelize": "^6.37.1",
     "sib-api-v3-sdk": "^8.5.0"
