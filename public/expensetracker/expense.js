@@ -16,7 +16,7 @@ downloadButton.addEventListener('click', downloadExpense)
 
 function downloadExpense(){
     const token = localStorage.getItem('jwtToken')
-    axios.get('http://13.60.41.38:3000/user/download', { headers: {"Authorization" : token} })
+    axios.get('http://13.49.243.60:3000/user/download', { headers: {"Authorization" : token} })
     .then((response) => {
         if(response.status === 201){
             console.log(response)
@@ -39,7 +39,7 @@ function downloadExpense(){
 function downloadedExpense() {
     downloadUrls.innerHTML = ""
     const token = localStorage.getItem('jwtToken')
-    axios.get('http://13.60.41.38:3000/user/downloads', { headers: {"Authorization" : token} })
+    axios.get('http://13.49.243.60:3000/user/downloads', { headers: {"Authorization" : token} })
     .then((res) => {
         if(res.data.downloadedExpenses.length == 0){
             downloadUrls.innerHTML = "No downloaded data found"
@@ -94,7 +94,7 @@ function premiumuser(){
 async function leaderboard(){
     const leaderboard = document.getElementById('leaderboard-items');
     leaderboard.innerHTML = ""
-    await axios.get('http://13.60.41.38:3000/premium/leaderboard')
+    await axios.get('http://13.49.243.60:3000/premium/leaderboard')
     .then(res => {
         res.data.users.forEach(expense => {
             var i = 0
@@ -121,7 +121,7 @@ async function leaderboard(){
 document.getElementById('buy-button').onclick = async function (e){
     const token = localStorage.getItem('jwtToken')
     //console.log(token)
-    const response = await axios.post('http://13.60.41.38:3000/purchase/purchase-premium', {}, {headers: {'Authorization': token}
+    const response = await axios.post('http://13.49.243.60:3000/purchase/purchase-premium', {}, {headers: {'Authorization': token}
 });
     console.log(response)
 
@@ -130,7 +130,7 @@ document.getElementById('buy-button').onclick = async function (e){
             'key': response.data.key_id, 
             'order_id': response.data.order.id,
             'handler': async function(response) {
-                await axios.post('http://13.60.41.38:3000/purchase/updatetransactionstatus',
+                await axios.post('http://13.49.243.60:3000/purchase/updatetransactionstatus',
                 {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id,
@@ -151,7 +151,7 @@ document.getElementById('buy-button').onclick = async function (e){
     e.preventDefault()
 
     rzp1.on('payment.failed', async function (response) {
-        await axios.post('http://13.60.41.38:3000/purchase/purchase-failure', {response}, {headers: {'Authorization': token}});
+        await axios.post('http://13.49.243.60:3000/purchase/purchase-failure', {response}, {headers: {'Authorization': token}});
         console.log('Payment failed:', response.error.metadata.order_id);
         alert("Something went wrong")
     });
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create a new expense
             const token = localStorage.getItem('jwtToken')
             //console.log(token)
-            const response = await axios.post(`http://13.60.41.38:3000/expense/add-expense`, { amount, description, category},{headers :{'Authorization': token}});
+            const response = await axios.post(`http://13.49.243.60:3000/expense/add-expense`, { amount, description, category},{headers :{'Authorization': token}});
             console.log(response)
             
             // Fetch and display expenses
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTableContent();
             const token = localStorage.getItem('jwtToken')
             //console.log(token)
-            const response = await axios.get(`http://13.60.41.38:3000/expense/get-expense?page=${page}&pageitems=${itemno}`,{headers: {'Authorization': token }});
+            const response = await axios.get(`http://13.49.243.60:3000/expense/get-expense?page=${page}&pageitems=${itemno}`,{headers: {'Authorization': token }});
             const expenses = response.data.Expenses;
             const pageData = response.data.pageData
             //console.log(response.data);
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function deleteExpense(expenseId, expenseItem) {
         try {
             const token = localStorage.getItem('jwtToken')
-            const response = await axios.delete(`http://13.60.41.38:3000/expense/delete-expense/${expenseId}`,{headers: {'Authorization': token}});
+            const response = await axios.delete(`http://13.49.243.60:3000/expense/delete-expense/${expenseId}`,{headers: {'Authorization': token}});
 
             // Remove the expense item from the DOM
             expenseItem.remove();
