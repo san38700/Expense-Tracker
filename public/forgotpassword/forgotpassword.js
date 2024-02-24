@@ -10,7 +10,7 @@ form.addEventListener('submit', async function (e) {
     };
 
     try {
-        const response = await axios.post('http://13.49.243.60:3000/password/forgotpassword', obj);
+        const response = await axios.post('http://13.60.25.93:3000/password/forgotpassword', obj);
         console.log(response);
 
         var messageElement = document.getElementById("message");
