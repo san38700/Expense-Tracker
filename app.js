@@ -48,6 +48,7 @@ app.use(passwordRoutes)
 
 app.use((req,res) => {
     //console.log('url',req.url)
+    console.log('requested')
     res.sendFile(path.join(__dirname,`public/${req.url}`))
 })
 
