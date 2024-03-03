@@ -141,28 +141,44 @@ exports.deleteExpense = async (req,res,next) => {
 }
 
 
-exports.downloadExpense =  async (req, res, next) => {
+exports.downloadExpense = async (req, res, next) => {
+    let transaction;
     try {
-        const expenses = await Userservices.getExpenses(req)
-        console.log(expenses)
+        // Begin a transaction
+        transaction = await sequelize.transaction();
+
+        const expenses = await Userservices.getExpenses(req);
+        console.log(expenses);
+
         const userId = req.user.id;
         const stringifiedExpenses = JSON.stringify(expenses);
         console.log(stringifiedExpenses);
 
         const currentDate = new Date();
-        const filename = `Expense${userId}/${currentDate.getMinutes()}${currentDate.getSeconds()}.txt`;
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const date = currentDate.getDate().toString().padStart(2, '0');
+        const hours = currentDate.getHours().toString().padStart(2, '0');
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+        const filename = `Expense${userId}/${year}${month}${date}_${hours}${minutes}${seconds}.txt`;
 
         const fileURL = await s3services.uploadToS3(process.env.BUCKET_NAME, stringifiedExpenses, filename);
 
         console.log('File uploaded successfully. Object URL:', fileURL);
 
-        const url =  Url.create({url : fileURL, userId: userId})
-        url.then(result => {
-            console.log(result.url)
-            res.status(201).json({ fileURL, success: true });
-        })
-        .catch((err) => console.log(err))
+        // Create a record in the database
+        const url = await Url.create({ url: fileURL, userId: userId }, { transaction });
+
+        // Commit the transaction
+        await transaction.commit();
+
+        console.log(url.url);
+        res.status(201).json({ fileURL, success: true });
     } catch (error) {
+        // Rollback the transaction if an error occurs
+        if (transaction) await transaction.rollback();
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }

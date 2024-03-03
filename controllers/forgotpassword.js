@@ -61,7 +61,10 @@ exports.forgotpassword = async (req,res,next) => {
 
        res.status(201).json({message: 'Please check your email for resetting your password',id: request.id})
     })
-    .catch(err => console.log(err))
+    .catch(err =>  {
+        console.log(err)
+        res.status(500).json({ error: 'Internal Server Error' });
+    })
     }
     
 }

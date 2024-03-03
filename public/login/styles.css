@@ -1,28 +1,63 @@
-
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 50px;
+    background: #f3f0d7;
 }
 form {
     max-width: 400px;
     margin: 0 auto;
 }
-input {
+
+input{
     width: 100%;
-    padding: 10px;
-    margin: 8px 0;
+    padding: 12px;
+    border: 10px;
+    outline: 0;
+    margin: 15px auto;
+    font-size: 15px;
+    border-radius: 10px;
     box-sizing: border-box;
+    color: #121212;
 }
+
 button {
     background-color: #5110f6;
     color: white;
     padding: 10px 15px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
 a {
     text-decoration: none;
     color: #036b1f;
+}
+.input-box{
+    background: #fff;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    padding: 0px ;
+    margin:5px auto;
+    display: flex;
+    align-items: center;
+    
+}
+.input-box input{
+    width: 100%;
+    padding: 3px;
+    border: 0;
+    outline: 0;
+    margin: 8px 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+    color: #121212;
+}
+
+.input-box img{
+    width: 25px;
+    margin-right: 10px;
+    cursor: pointer;
 }

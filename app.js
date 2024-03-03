@@ -47,8 +47,7 @@ app.use(purchaseRoutes)
 app.use(passwordRoutes)
 
 app.use((req,res) => {
-    //console.log('url',req.url)
-    console.log('poll succeeded')
+    console.log('url',req.url)
     res.sendFile(path.join(__dirname,`public/${req.url}`))
 })
 
@@ -68,5 +67,5 @@ Url.belongsTo(User)
 sequelize
     // .sync({force: true})
     .sync()
-    .then(result => app.listen(process.env.PORT || 3000))
+    .then(result => app.listen(3000))
     .catch(err => console.log(err))

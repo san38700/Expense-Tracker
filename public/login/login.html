@@ -4,47 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <style>
-        
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 50px;
-}
-form {
-    max-width: 400px;
-    margin: 0 auto;
-}
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-button {
-    background-color: #5110f6;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-a {
-    text-decoration: none;
-    color: #036b1f;
-}
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <form id='form'>
         <h2>User Login</h2>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+
+        <div class="input-box">
+            <input type="password" placeholder="Password" id="password">
+            <img src="eye-close.png" id="eyeicon">
+        </div>
 
         <button type="submit">Login</button>
     </form>

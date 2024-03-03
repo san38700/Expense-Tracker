@@ -47,12 +47,12 @@ function downloadedExpense() {
         
         //console.log(res.data.downloadedExpenses.length)
         res.data.downloadedExpenses.forEach(function (data){
-            console.log(data.url)
+            // console.log(data.url)
             var a = document.createElement("a");
             const url = data.url
             a.href = url
-            const date = new Date
-            a.textContent = `${url}`
+            const fileName = url.substring(url.lastIndexOf('/') + 1);
+            a.textContent = fileName
             downloadUrls.appendChild(a)
         })
     })
@@ -77,7 +77,7 @@ setInterval(updateDateTime, 1000);
 
 function premiumuser(){
     premiumlabel = document.getElementById('buy-button')
-    premiumlabel.innerText = 'Premium User';
+    premiumlabel.innerText = 'You are now a Premium User';
     premiumlabel.disabled = true;
     premiumlabel.style.backgroundColor = 'gold';
     premiumlabel.style.pointerEvents = 'none';
@@ -212,11 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await axios.get(`http://13.60.25.93:3000/expense/get-expense?page=${page}&pageitems=${itemno}`,{headers: {'Authorization': token }});
             const expenses = response.data.Expenses;
             const pageData = response.data.pageData
-            //console.log(response.data);
+            console.log(response.data);
             //console.log(pageData)
             const totalItems = response.data.pageData.totalItems
             //console.log(totalItems)
-            console.log
             const ispremiumuser = response.data.premiumuser
             
             //pageId.innerText = `Showing ${itemsPerPage} of ${totalItems}`
@@ -242,7 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 addTableHeader(headerRow, 'Amount');
                 addTableHeader(headerRow, 'Description');
                 addTableHeader(headerRow, 'Category');
-                //addTableHeader(headerRow, ''); // Empty cell for the delete button
+                addTableHeader(headerRow, 'Date'); // Empty cell for the delete button
+                addTableHeader(headerRow,'');
                 headersAdded = true;
             }
 
@@ -311,6 +311,16 @@ document.addEventListener('DOMContentLoaded', () => {
         addTableCell(row, expense.amount);
         addTableCell(row, expense.description);
         addTableCell(row, expense.category);
+        const dateTimeString = expense.createdAt; // Your date-time string
+
+        // Split the date-time string by "T" to separate date and time
+        const parts = dateTimeString.split("T");
+
+        // Extract the date part from the first part of the split array
+        const datePart = parts[0]; // This contains only the date portion
+
+        addTableCell(row, datePart);       
+         
 
         // Add the delete button to the last column
         const deleteCell = row.insertCell();

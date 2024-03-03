@@ -3,16 +3,22 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 50px;
+    background: #f3f0d7;
 }
 form {
     max-width: 400px;
     margin: 0 auto;
 }
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    box-sizing: border-box;
+input{
+        width: 100%;
+        padding: 12px;
+        border: 10px;
+        outline: 0;
+        margin: 15px auto;
+        font-size: 15px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        color: #121212;
 }
 button {
     background-color: #5110f6;
