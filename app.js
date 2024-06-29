@@ -1,6 +1,8 @@
 const express = require('express');
 require('dotenv').config();
 
+const mongoose = require('mongoose');
+
 
 const path = require('path');
 const fs = require('fs')
@@ -13,13 +15,13 @@ const morgan = require('morgan')
 var cors = require('cors')
 
 
-const Expense = require('./models/expense')
-const User = require('./models/user')
-const ForgotPasswordRequest = require('./models/forgotpassword')
-const Url = require('./models/fileurl')
-const Order = require('./models/order')
+// const Expense = require('./models/expense')
+// const User = require('./models/user')
+// const ForgotPasswordRequest = require('./models/forgotpassword')
+// const Url = require('./models/fileurl')
+// const Order = require('./models/order')
 
-const sequelize = require('./util/database')
+// const sequelize = require('./util/database')
 
 
 const app = express();
@@ -51,21 +53,33 @@ app.use((req,res) => {
     res.sendFile(path.join(__dirname,`public/${req.url}`))
 })
 
-User.hasMany(Expense)
-Expense.belongsTo(User)
 
-User.hasMany(Order); // One user can have many orders
-Order.belongsTo(User); // Each order belongs to one user
+// User.hasMany(Expense)
+// Expense.belongsTo(User)
+
+// User.hasMany(Order); // One user can have many orders
+// Order.belongsTo(User); // Each order belongs to one user
 
 
-User.hasMany(ForgotPasswordRequest)
-ForgotPasswordRequest.belongsTo(User)
+// User.hasMany(ForgotPasswordRequest)
+// ForgotPasswordRequest.belongsTo(User)
 
-User.hasMany(Url)
-Url.belongsTo(User)
+// User.hasMany(Url)
+// Url.belongsTo(User)
 
-sequelize
-    // .sync({force: true})
-    .sync()
-    .then(result => app.listen(3000))
-    .catch(err => console.log(err))
+mongoose
+  .connect(
+    `mongodb+srv://sandeepkumar:${process.env.MONGODBPASS}@cluster0.br5anyu.mongodb.net/expense-tracker?retryWrites=true&w=majority&appName=Cluster0`
+  )
+  .then(result => {
+    console.log('Connected !')
+    app.listen(3000)
+    })
+  .catch(err => console.log(err))
+
+
+// sequelize
+//     // .sync({force: true})
+//     .sync()
+//     .then(result => app.listen(3000))
+//     .catch(err => console.log(err))

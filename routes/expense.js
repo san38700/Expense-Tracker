@@ -5,7 +5,7 @@ const router = express.Router();
 const expenseController = require('../controllers/expense');
 const authenticationController = require('../controllers/userauthentication')
 
-router.post('/expense/add-expense',expenseController.addExpense)
+router.post('/expense/add-expense',authenticationController.authentication,expenseController.addExpense)
 
 router.get('/expense/get-expense',authenticationController.authentication,expenseController.getExpense)
 
@@ -15,6 +15,7 @@ router.get('/user/download',expenseController.authenticate,expenseController.dow
 
 router.get('/user/downloads',expenseController.authenticate,expenseController.downloads)
 
-router.delete('/expense/edit-expense/:id',expenseController.editExpense)
+// router.delete('/expense/edit-expense/:id',expenseController.editExpense)
+
 
 module.exports = router

@@ -8,7 +8,7 @@ exports.authentication = async (req,res,next) => {
        const user = jwt.verify(token, process.env.TOKEN_SECRET)
        console.log('userId >>>', user.userId)
  
-       User.findByPk(user.userId)
+       User.findById(user.userId)
          .then(user => {
            req.user = user
            next()
